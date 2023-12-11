@@ -10,6 +10,8 @@ export const typeDefs = gql`
     tasks: [Task!]
     user(_id: ID!):User
     allUsers: [User!]
+    currentUser: User
+    allProjectsByUser:[Project!]
   }
 
   type Mutation {
@@ -18,7 +20,9 @@ export const typeDefs = gql`
     deleteproject(_id:ID!):Project
     deleteTask(_id:ID!):Task
     updateProject(_id:ID!,name:String,descripcion:String):Project
-    updateTask(_id:ID!,title:String!,description:String,projectId:ID!):Task
+    updateTask(_id:ID!,title:String,description:String):Task
+    createUser(username:String!,email:String!,password:String!):User
+    login(username: String!, password: String!): Token
   }
 
   type Project {
@@ -27,8 +31,10 @@ export const typeDefs = gql`
     descripcion: String
     createdAt:String
     updatedAt:String
+    userId:String
     user:User
     tasks:[Task]
+    taskCount:String
   }
   type Task {
     _id:ID
@@ -36,6 +42,7 @@ export const typeDefs = gql`
     description: String
     date: String
     project:Project
+    projectId:String
     user:User
     createdAt:String
     updatedAt:String	
@@ -50,6 +57,9 @@ export const typeDefs = gql`
     updatedAt:String
     allProjects:[Project]
   }
-
+  type Token {
+    value: String!,
+    userId:String!
+  }
 
 `;
